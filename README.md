@@ -18,7 +18,7 @@ async def on_ready():
     print("ready")
 
 @client.event
-async def on_interaction(i)
+async def on_interaction(i):
     await i.send("Pong!", True)
 
 client.run("token")
