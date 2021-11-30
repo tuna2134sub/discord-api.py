@@ -15,8 +15,12 @@ client.run("ToKeN")
 
 def main():
     arg = argv[1:]
-    filename = arg[0]
-    a = print("Now setup...")
-    with open(filename + ".py", "w") as f:
-        f.write(cleandoc(code))
-    print("Setup is finish.")
+    cmd = arg[0]
+    if cmd == "setup":
+        filename = arg[1]
+        print("\rNow setup...", end = "")
+        with open(filename + ".py", "w") as f:
+            f.write(cleandoc(code))
+        print("\rSetup is finish", end = "")
+    else:
+        print("404 Not found error.")
