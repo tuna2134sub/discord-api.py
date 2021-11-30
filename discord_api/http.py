@@ -40,6 +40,8 @@ class DiscordRequest:
             headers["Content-Type"] = "application/json"
         kwargs["headers"] = headers
         async with self.session.request(route.method, f"{self.baseurl}{route.route}", *args, **kwargs) as r:
+            if r.status == 429:
+                raise ApiError("Now api is limit. Wait a minute please.")
             return await self.json_or_text(r)
 
     async def static_login(self):
