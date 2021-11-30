@@ -6,6 +6,12 @@ This is api wrapper for discord api.
 
 Easy to create a bot
 
+## setup
+
+```bash
+discord-api setup main
+```
+
 ## sample
 
 ```python
