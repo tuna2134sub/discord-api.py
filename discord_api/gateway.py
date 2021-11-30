@@ -90,6 +90,8 @@ class DiscordGateway:
                 self.keepalive.start()
                 self.client.print("HEARTBEAT", "start")
                 await self.start()
+            if data["op"] == 1:
+                await self.send(self.keepalive.get_data())
                 
         if data["t"] == "READY":
             self.sequence = data["s"]
