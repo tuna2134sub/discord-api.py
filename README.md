@@ -4,6 +4,8 @@
 
 This is api wrapper for discord api.
 
+Easy to create a bot
+
 ## sample
 
 ```python
