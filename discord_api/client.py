@@ -120,6 +120,9 @@ class Client:
         return channel
 
     async def setup_command(self):
+        """
+        set up a application command.
+        """
         apis = await self.fetch_commands()
         for command in self.commands:
             update = False
