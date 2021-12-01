@@ -2,6 +2,8 @@ from aiohttp import ClientSession
 from .gateway import DiscordGateway
 from .command import Command
 from .errors import *
+from .role import Role
+from .member import Member
 from ujson import dumps
 
 class Route:
@@ -49,8 +51,7 @@ class DiscordRequest:
         return data
 
     async def send_message(self, channelid, payload):
-        c = await self.request(Route("POST", f"/channels/{channelid}/messages"), json = payload)
-        print(c)
+        await self.request(Route("POST", f"/channels/{channelid}/messages"), json = payload)
 
     async def slash_callback(self, interaction, payload):
         json = {
@@ -64,3 +65,6 @@ class DiscordRequest:
 
     async def add_command(self, command:Command):
         await self.request(Route("POST", f"/applications/{self.client.user.id}/commands"), json = command.to_dict())
+        
+    async def add_role(self, member:Member, role:Role):
+        await self.request(Route("PUT", f"/guilds/{member.guild.id}/members/{member.id}/roles/{role.id}"))
