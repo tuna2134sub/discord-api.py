@@ -39,6 +39,12 @@ class Client:
                 pass
 
     def print(self, name, content):
+        """
+        This is print a like sanic log
+        
+        Examples:
+            client.print("test", "this is test")
+        """
         if self.log is True:
             print(f"[{name}]:{content}")
 
