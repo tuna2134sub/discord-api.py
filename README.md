@@ -12,6 +12,14 @@ Easy to create a bot
 discord-api setup main
 ```
 
+## extension
+
+If you want to create extention module.
+
+Please do like this name.
+
+`discord-api-{name}`
+
 ## sample
 
 ```python
