@@ -16,7 +16,8 @@ class Interaction:
         self.token = data["token"]
         self.data = data.get("data")
         self.id = data["id"]
-        self.author = Member.from_dict(data["user"])
+        if data.get("member"):
+            self.author = Member.from_dict(data["member"]["user"])
         if data.get("guild_id"):
             self.guild = client.get_guild(int(data.get("guild_id")))
         else:
