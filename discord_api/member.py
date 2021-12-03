@@ -7,4 +7,4 @@ class Member:
 
     @classmethod
     def from_dict(cls, data):
-        return cls(data["user"])
+        return cls(data)
