@@ -116,6 +116,74 @@ class DiscordGateway:
             "d": {
                 "token": self.token,
                 "intents": 513,
+from .guild import Guild
+from .errors import GatewayError
+from .interaction import Interaction
+import sys
+import threading
+import asyncio
+import time
+import aiohttp
+
+class KeepAlive(threading.Thread):
+    def __init__(self, *args, **kwargs):
+        ws = kwargs.pop("ws", None)
+        self.ws = ws
+        interval = kwargs.pop("interval", None)
+        self.interval = interval
+        self._stop_ev = threading.Event()
+        super().__init__(target = self.run)
+        self.daemon = True
+        self._last_ack = time.perf_counter()
+        self._last_send = time.perf_counter()
+        self._last_recv = time.perf_counter()
+
+    def get_data(self):
+        return {
+            "op": 1,
+            "d": self.ws.sequence
+        }
+
+    def run(self):
+        while not self._stop_ev.wait(self.interval):
+            self.ws.client.print("HEARTBEAT", "send")
+            coro = self.ws.send(self.get_data())
+            f = asyncio.run_coroutine_threadsafe(coro, loop = self.ws.client.loop)
+            while True:
+                try:
+                    f.result(10)
+                    break
+                except:
+                    pass
+
+class DiscordGateway:
+    def __init__(self, client, ws, token):
+        self.client = client
+        self.ws = ws
+        self.token = token
+        self.sequence = None
+
+    @classmethod
+    async def start_gateway(cls, client, ws, token):
+        self = cls(client, ws, token)
+        await self.catch_message()
+        return self
+
+    async def reconnect(self):
+        if self.ws is None:
+            raise GatewayError("You isn't connect to gateway.")
+        else:
+            self.ws = None
+            self.keepalive = None
+            self.ws = await self.client.http.connect()
+            await self.catch_message()
+
+    async def start(self):
+        payload = {
+            "op": 2,
+            "d": {
+                "token": self.token,
+                "intents": 513,
                 "properties": {
                     "$os": sys.platform,
                     "$browser": "discord-api.py",
