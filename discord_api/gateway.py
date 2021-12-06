@@ -1,5 +1,4 @@
 from .guild import Guild
-from .message import Message
 from .errors import GatewayError
 from .interaction import Interaction
 import sys
@@ -117,8 +116,8 @@ class DiscordGateway:
             self.client.dispatch("interaction", interaction)
 
         elif data["t"] == "MESSAGE_CREATE":
-            message = Message.from_dict(client, data["d"])
-            self.client.dispatch("message", message)
+            # message = Message.from_dict(client, data["d"])
+            # self.client.dispatch("message", message)
 
 class VoiceGateway(DiscordGateway):
     def __init__(self, *args, **kwargs):
