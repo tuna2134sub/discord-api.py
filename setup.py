@@ -13,7 +13,7 @@ setuptools.setup(
         ]
     },
     name="discord-api.py",
-    version="0.0.9",
+    version="0.0.10",
     author="DMS",
     author_email="masato190411@gmail.com",
     description="This is discord-api wrapper.",
