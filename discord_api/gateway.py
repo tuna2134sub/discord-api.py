@@ -116,6 +116,7 @@ class DiscordGateway:
             self.client.dispatch("interaction", interaction)
 
         elif data["t"] == "MESSAGE_CREATE":
+            pass
             # message = Message.from_dict(client, data["d"])
             # self.client.dispatch("message", message)
 
