@@ -2,7 +2,7 @@
 
 ## introduction
 
-This is api wrapper for discord api.
+This is discord api wrapper.
 
 Easy to create a bot
 
